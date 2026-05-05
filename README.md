@@ -2,6 +2,8 @@
 
 Joc multijugador de trivia musical on els jugadors han d'endevinar l'any de llançament d'una cançó a partir d'un preview de 20 segons.
 
+**Demo:** https://yearbeat-2fad8.web.app/
+
 ## Stack
 
 - Frontend: Vue 3 + Vite + TypeScript + Tailwind + Pinia + Socket.io client + PWA

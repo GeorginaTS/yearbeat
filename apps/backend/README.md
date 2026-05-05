@@ -122,3 +122,8 @@ Funció a `src/services/scoreService.ts`:
   - comprova `DATABASE_URL`
 - Connexió Redis fallida:
   - comprova `REDIS_URL`
+
+## Documentació específica
+
+- Socket.io (events, payloads, flux): `docs/socket.md`
+- Deezer service: `docs/deezer-service.md`
