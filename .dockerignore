@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.output/
+.turbo/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Generated Prisma (re-generated inside Docker)
+apps/backend/src/generated/
+
+# Frontend (not needed for backend image)
+apps/frontend/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docs / misc
+*.md
+!README.md
+PROMPT.md
+apps/backend/docs/

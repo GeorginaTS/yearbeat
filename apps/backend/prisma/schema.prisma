@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Game {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  status      String     @default("LOBBY")
+  currentSong Int        @default(0)
+  config      Json
+  createdAt   DateTime   @default(now())
+  players     Player[]
+  gameSongs   GameSong[]
+}
+
+model Player {
+  id         String   @id @default(cuid())
+  name       String
+  isHost     Boolean  @default(false)
+  totalScore Int      @default(0)
+  gameId     String
+  socketId   String?
+  game       Game     @relation(fields: [gameId], references: [id])
+  answers    Answer[]
+}
+
+model Song {
+  id            String     @id @default(cuid())
+  deezerTrackId Int        @unique
+  title         String
+  artist        String
+  year          Int
+  previewUrl    String
+  coverUrl      String
+  gameSongs     GameSong[]
+}
+
+model GameSong {
+  id      String   @id @default(cuid())
+  order   Int
+  gameId  String
+  songId  String
+  game    Game     @relation(fields: [gameId], references: [id])
+  song    Song     @relation(fields: [songId], references: [id])
+  answers Answer[]
+
+  @@unique([gameId, order])
+}
+
+model Answer {
+  id         String   @id @default(cuid())
+  yearGuess  Int
+  score      Int      @default(0)
+  diff       Int
+  playerId   String
+  gameSongId String
+  player     Player   @relation(fields: [playerId], references: [id])
+  gameSong   GameSong @relation(fields: [gameSongId], references: [id])
+
+  @@unique([playerId, gameSongId])
+}

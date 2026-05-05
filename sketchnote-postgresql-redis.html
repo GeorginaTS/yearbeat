@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketchnote: PostgreSQL & Redis</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+        svg {
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="0 0 1200 1400" width="1200" height="1400">
+        <!-- Fons blanc impecable -->
+        <rect width="1200" height="1400" fill="white"/>
+        
+        <!-- TÍTOL CENTRAL AMB EFECTE 3D -->
+        <defs>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+                .hand-written {
+                    font-family: 'Caveat', cursive;
+                    font-size: 48px;
+                    font-weight: bold;
+                    letter-spacing: 2px;
+                }
+                .hand-text {
+                    font-family: 'Caveat', cursive;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+                .small-text {
+                    font-family: 'Caveat', cursive;
+                    font-size: 22px;
+                }
+            </style>
+            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+            </filter>
+        </defs>
+
+        <!-- CAIXA 3D DEL TÍTOL -->
+        <g filter="url(#shadow)">
+            <!-- Ombra 3D (posterior) -->
+            <polygon points="150,150 150,350 200,400 200,200" fill="#e0e0e0" opacity="0.6"/>
+            <polygon points="150,350 550,350 600,400 200,400" fill="#d0d0d0" opacity="0.6"/>
+            
+            <!-- Caixa principal -->
+            <rect x="150" y="150" width="400" height="200" fill="white" stroke="#1a1a1a" stroke-width="3" rx="8"/>
+            
+            <!-- Aresta 3D superior -->
+            <line x1="150" y1="150" x2="200" y2="100" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="550" y1="150" x2="600" y2="100" stroke="#1a1a1a" stroke-width="2"/>
+            <polygon points="150,150 550,150 600,100 200,100" fill="#ffffff" stroke="#1a1a1a" stroke-width="2"/>
+        </g>
+
+        <!-- TÍTOL TEXT -->
+        <text x="350" y="260" text-anchor="middle" class="hand-written" fill="#1a1a1a">POSTGRESQL & REDIS</text>
+
+        <!-- DECORACIÓ TÍTOL -->
+        <circle cx="120" cy="250" r="8" fill="none" stroke="#FF9F1C" stroke-width="2"/>
+        <circle cx="580" cy="250" r="8" fill="none" stroke="#FF9F1C" stroke-width="2"/>
+        <line x1="130" y1="250" x2="570" y2="250" stroke="#FF9F1C" stroke-width="1" stroke-dasharray="5,5" opacity="0.5"/>
+
+        <!-- ============ SECCIÓN IZQUIERDA: POSTGRESQL ============ -->
+        
+        <!-- Caixa PostgreSQL -->
+        <g>
+            <rect x="50" y="500" width="380" height="380" fill="none" stroke="#1a1a1a" stroke-width="2.5" rx="6"/>
+            <rect x="50" y="500" width="380" height="50" fill="#4B7BA7" opacity="0.15"/>
+            
+            <!-- Títol PostgreSQL -->
+            <text x="240" y="535" text-anchor="middle" class="hand-text" fill="#1a1a1a">POSTGRESQL</text>
+            <text x="240" y="565" text-anchor="middle" class="small-text" fill="#4B7BA7" font-weight="normal">LA MEMÒRIA PERMANENT</text>
+            
+            <!-- Icona base de dades (cilindre) -->
+            <ellipse cx="90" cy="590" rx="35" ry="15" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+            <rect x="55" y="590" width="70" height="50" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+            <ellipse cx="90" cy="640" rx="35" ry="15" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="55" y1="595" x2="55" y2="635" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="125" y1="595" x2="125" y2="635" stroke="#1a1a1a" stroke-width="2"/>
+            
+            <!-- Taules dins -->
+            <text x="150" y="610" class="small-text" fill="#1a1a1a">GAMES</text>
+            <text x="150" y="635" class="small-text" fill="#1a1a1a">PLAYERS</text>
+            <text x="150" y="660" class="small-text" fill="#1a1a1a">ANSWERS</text>
+            
+            <!-- Símbols de durabilitat -->
+            <path d="M 340 600 Q 360 580 380 600" fill="none" stroke="#FF9F1C" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 340 620 Q 360 600 380 620" fill="none" stroke="#FF9F1C" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="360" cy="640" r="12" fill="none" stroke="#FF9F1C" stroke-width="2"/>
+            <text x="360" y="645" text-anchor="middle" class="small-text" fill="#FF9F1C" font-size="16">✓</text>
+            
+            <!-- Característiques -->
+            <text x="70" y="730" class="small-text" fill="#1a1a1a">📁 PERMANENT</text>
+            <text x="70" y="760" class="small-text" fill="#1a1a1a">🐢 LENT (~50ms)</text>
+            <text x="70" y="790" class="small-text" fill="#1a1a1a">💾 SEGUR</text>
+            <text x="70" y="820" class="small-text" fill="#1a1a1a">📊 HISTORIAL</text>
+        </g>
+
+        <!-- ============ SECCIÓN DERECHA: REDIS ============ -->
+        
+        <!-- Caixa Redis -->
+        <g>
+            <rect x="770" y="500" width="380" height="380" fill="none" stroke="#1a1a1a" stroke-width="2.5" rx="6"/>
+            <rect x="770" y="500" width="380" height="50" fill="#FF9F1C" opacity="0.15"/>
+            
+            <!-- Títol Redis -->
+            <text x="960" y="535" text-anchor="middle" class="hand-text" fill="#1a1a1a">REDIS</text>
+            <text x="960" y="565" text-anchor="middle" class="small-text" fill="#FF9F1C" font-weight="normal">LA MEMÒRIA RÀPIDA</text>
+            
+            <!-- Icona memòria/cache (llàmina) -->
+            <rect x="810" y="590" width="60" height="40" fill="none" stroke="#1a1a1a" stroke-width="2" rx="3"/>
+            <rect x="810" y="590" width="20" height="40" fill="#FF9F1C" opacity="0.3" rx="2"/>
+            <rect x="835" y="590" width="20" height="40" fill="#FF9F1C" opacity="0.5" rx="2"/>
+            <rect x="860" y="590" width="10" height="40" fill="#FF9F1C" opacity="0.8" rx="2"/>
+            
+            <!-- Text dins -->
+            <text x="910" y="610" class="small-text" fill="#1a1a1a">CANÇONS</text>
+            <text x="910" y="635" class="small-text" fill="#1a1a1a">CACHE</text>
+            <text x="910" y="660" class="small-text" fill="#1a1a1a">TEMP</text>
+            
+            <!-- Icona velocitat/relampaç -->
+            <path d="M 1010 590 L 1030 620 L 1018 620 L 1038 660 M 1038 660 L 1015 630 L 1028 630 Z" 
+                  fill="#FF9F1C" stroke="#1a1a1a" stroke-width="1.5"/>
+            <text x="1070" y="625" class="small-text" fill="#FF9F1C">⚡</text>
+            
+            <!-- Característiques -->
+            <text x="790" y="730" class="small-text" fill="#1a1a1a">⚡ RÀPID (<1ms)</text>
+            <text x="790" y="760" class="small-text" fill="#1a1a1a">💨 TEMPORAL</text>
+            <text x="790" y="790" class="small-text" fill="#1a1a1a">🔄 EXPIRA (TTL)</text>
+            <text x="790" y="820" class="small-text" fill="#1a1a1a">🎯 REAL-TIME</text>
+        </g>
+
+        <!-- ============ FLUX CENTRAL: CONVERSA ENTRE AMBDUES ============ -->
+        
+        <!-- Línia connectora central -->
+        <line x1="430" y1="700" x2="770" y2="700" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrowhead)"/>
+        
+        <!-- Caixa de flux -->
+        <g>
+            <rect x="430" y="920" width="340" height="380" fill="none" stroke="#1a1a1a" stroke-width="2.5" rx="6"/>
+            <rect x="430" y="920" width="340" height="50" fill="#4B7BA7" opacity="0.1"/>
+            
+            <!-- Títol flux -->
+            <text x="600" y="955" text-anchor="middle" class="hand-text" fill="#1a1a1a">FLUX D'UNA PARTIDA</text>
+            
+            <!-- Pas 1 -->
+            <circle cx="470" cy="1020" r="22" fill="none" stroke="#FF9F1C" stroke-width="2.5"/>
+            <text x="470" y="1028" text-anchor="middle" class="small-text" fill="#FF9F1C">1</text>
+            
+            <text x="510" y="1015" class="small-text" fill="#1a1a1a">CLIENT CREA ROOM</text>
+            <path d="M 505 1035 L 505 1055" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+            
+            <!-- Pas 2 -->
+            <circle cx="470" cy="1080" r="22" fill="none" stroke="#4B7BA7" stroke-width="2.5"/>
+            <text x="470" y="1088" text-anchor="middle" class="small-text" fill="#4B7BA7">2</text>
+            
+            <text x="510" y="1075" class="small-text" fill="#1a1a1a">REDIS: HI HA CACHE?</text>
+            <path d="M 505 1095 L 505 1115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+            
+            <!-- Pas 3 -->
+            <circle cx="470" cy="1140" r="22" fill="none" stroke="#FF9F1C" stroke-width="2.5"/>
+            <text x="470" y="1148" text-anchor="middle" class="small-text" fill="#FF9F1C">3</text>
+            
+            <text x="510" y="1135" class="small-text" fill="#1a1a1a">DEEZER → 25 CANÇONS</text>
+            <path d="M 505 1155 L 505 1175" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+            
+            <!-- Pas 4 -->
+            <circle cx="470" cy="1200" r="22" fill="none" stroke="#4B7BA7" stroke-width="2.5"/>
+            <text x="470" y="1208" text-anchor="middle" class="small-text" fill="#4B7BA7">4</text>
+            
+            <text x="510" y="1195" class="small-text" fill="#1a1a1a">REDIS: GUARDA 24H TTL</text>
+            <path d="M 505 1215 L 505 1235" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+            
+            <!-- Pas 5 -->
+            <circle cx="470" cy="1260" r="22" fill="none" stroke="#FF9F1C" stroke-width="2.5"/>
+            <text x="470" y="1268" text-anchor="middle" class="small-text" fill="#FF9F1C">5</text>
+            
+            <text x="510" y="1255" class="small-text" fill="#1a1a1a">POSTGRESQL: GUARDA GAME</text>
+            <path d="M 505 1275 L 505 1295" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+            
+            <!-- Final -->
+            <circle cx="470" cy="1320" r="22" fill="none" stroke="#4B7BA7" stroke-width="2.5"/>
+            <text x="470" y="1328" text-anchor="middle" class="small-text" fill="#4B7BA7">✓</text>
+            
+            <text x="510" y="1315" class="small-text" fill="#1a1a1a">PARTIDA COMENÇADA!</text>
+        </g>
+
+        <!-- ============ DECORACIONS I CONNECTORS ============ -->
+        
+        <!-- Fletxes decoratives -->
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#1a1a1a"/>
+            </marker>
+            <marker id="arrowhead-orange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#FF9F1C"/>
+            </marker>
+        </defs>
+
+        <!-- Connector superior PostgreSQL → Redis -->
+        <path d="M 430 480 Q 600 380 770 480" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6"/>
+        
+        <!-- Labels connectors -->
+        <text x="480" y="380" class="small-text" fill="#4B7BA7" opacity="0.8">ES COMPLEMENTEN</text>
+        
+        <!-- Connectors inferiori -->
+        <path d="M 230 880 L 230 920" stroke="#FF9F1C" stroke-width="2" marker-end="url(#arrowhead-orange)"/>
+        <path d="M 960 880 L 730 920" stroke="#FF9F1C" stroke-width="2" marker-end="url(#arrowhead-orange)"/>
+        
+        <!-- Box resum final baix -->
+        <g>
+            <rect x="50" y="1330" width="1100" height="50" fill="none" stroke="#1a1a1a" stroke-width="2" rx="4"/>
+            <text x="600" y="1365" text-anchor="middle" class="small-text" fill="#1a1a1a" font-size="20">
+                🔑 NECESSITES AMBDUES: PostgreSQL per SEGURETAT + Redis per VELOCITAT = ⚡💾 PERFECT
+            </text>
+        </g>
+
+        <!-- Icones decoratives esquerre -->
+        <g opacity="0.4">
+            <text x="80" y="460" class="small-text" fill="#4B7BA7" font-size="32">📁</text>
+        </g>
+        
+        <!-- Icones decoratives dreta -->
+        <g opacity="0.4">
+            <text x="1050" y="460" class="small-text" fill="#FF9F1C" font-size="32">⚡</text>
+        </g>
+
+    </svg>
+</body>
+</html>

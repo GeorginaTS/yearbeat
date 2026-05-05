@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top, rgba(124, 58, 237, 0.25), transparent 35%),
+    radial-gradient(circle at 50% 32%, rgba(56, 189, 248, 0.2), transparent 22%),
+    linear-gradient(180deg, #0d0b16 0%, #0f0f1a 50%, #121126 100%);
+  color: #fff;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(168, 85, 247, 0.18) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.22;
+}
+
+.game-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top center, rgba(168, 85, 247, 0.18), transparent 25%),
+    linear-gradient(180deg, #100c1d 0%, #0f0f1a 45%, #17152b 100%);
+}
+
+.game-card {
+  @apply rounded-[24px] border border-white/10 bg-[rgba(26,26,46,0.82)] shadow-card backdrop-blur-md;
+}
+
+.game-card-soft {
+  @apply rounded-[20px] border border-white/10 bg-white/5 backdrop-blur-md;
+}
+
+.pill-button {
+  @apply flex w-full items-center justify-center gap-3 rounded-full px-6 py-5 text-base font-semibold uppercase tracking-[0.16em] transition disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.primary-pill {
+  @apply pill-button bg-button-violet text-white shadow-glow hover:brightness-110;
+}
+
+.secondary-pill {
+  @apply pill-button border-2 border-game-accent/90 bg-transparent text-[#8f47ff] hover:bg-game-accent/10;
+}
+
+.neon-note {
+  position: absolute;
+  color: rgba(255, 86, 214, 0.9);
+  text-shadow: 0 0 20px rgba(255, 86, 214, 0.8), 0 0 35px rgba(98, 75, 255, 0.4);
+  animation: float 5s ease-in-out infinite;
+}
+
+.glow-divider {
+  position: relative;
+}
+
+.glow-divider::before,
+.glow-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 22px);
+  height: 1px;
+  background: rgba(148, 163, 184, 0.25);
+}
+
+.glow-divider::before {
+  left: 0;
+}
+
+.glow-divider::after {
+  right: 0;
+}
+
+.vinyl-rings {
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.08) 0 24%, transparent 25%),
+    radial-gradient(circle, transparent 0 37%, rgba(255,255,255,0.09) 38% 39%, transparent 40%),
+    radial-gradient(circle, transparent 0 50%, rgba(0,0,0,0.22) 51% 52%, transparent 53%),
+    radial-gradient(circle, transparent 0 62%, rgba(255,255,255,0.06) 63% 64%, transparent 65%);
+}
+
+.score-row-enter-active,
+.score-row-leave-active {
+  transition: all 0.35s ease;
+}
+
+.score-row-enter-from,
+.score-row-leave-to {
+  opacity: 0;
+  transform: translateY(16px);
+}
