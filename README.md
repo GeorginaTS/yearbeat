@@ -72,7 +72,6 @@ Opció B (monorepo):
 - [ ] Puntuació correcta segons proximitat d'any
 - [ ] Llista final i podi coherents
 - [ ] Àudio preview reprodueix en mòbil i desktop
-- [ ] Reaccions socket es propaguen
 - [ ] PWA es genera en build
 
 ## Troubleshooting

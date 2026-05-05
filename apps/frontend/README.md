@@ -36,15 +36,12 @@ Fitxer: `apps/frontend/.env`
 - `VITE_FIREBASE_PROJECT_ID`
 - `VITE_FIREBASE_APP_ID`
 
-## Firebase Auth (Google + Facebook)
+## Firebase Auth (Google)
 
 1. Crea un projecte a Firebase Console.
-2. A `Authentication > Sign-in method`, activa només:
+2. A `Authentication > Sign-in method`, activa:
 	- Google
-	- Facebook
 3. A `Project settings > General > Your apps > Web app`, copia la config i omple `apps/frontend/.env`.
-4. A Facebook Developer Console, afegeix OAuth redirect URI:
-	- `https://<your-auth-domain>/__/auth/handler`
 
 ## Firebase Hosting (frontend)
 
@@ -76,7 +73,7 @@ Notes:
 - `src/views` — pantalles (`HomeView`, `LobbyView`, `GameView`, `ResultsView`)
 - `src/components/game` — disc, timer, selector any, reveal, etc.
 - `src/components/lobby` — codi de sala i llista jugadors
-- `src/components/results` — podi, leaderboard, share card
+- `src/components/results` — podi, leaderboard
 - `src/stores` — estat de joc, jugador, socket
 - `src/composables` — socket, àudio, PWA, timer
 - `src/assets/index.css` — tema i utilitats de disseny
