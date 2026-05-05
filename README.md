@@ -8,6 +8,7 @@ Joc multijugador de trivia musical on els jugadors han d'endevinar l'any de llan
 
 - Frontend: Vue 3 + Vite + TypeScript + Tailwind + Pinia + Socket.io client + PWA
 - Backend: Node.js + Express + TypeScript + Socket.io + Prisma + PostgreSQL + Redis
+- API externa: Deezer (previews de 30s, metadades de cançons i portades)
 - Monorepo: Turborepo + pnpm workspaces
 - Shared contracts: `packages/shared-types`
 
