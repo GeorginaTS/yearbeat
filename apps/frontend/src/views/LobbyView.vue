@@ -30,7 +30,7 @@
 
     <!-- Instructions nudge -->
     <button
-      class="mt-6 flex w-full items-center gap-3 rounded-2xl border border-violet-500/30 bg-violet-500/10 px-4 py-3 text-left transition hover:bg-violet-500/20 animate-pulse-slow"
+      class="mt-6 flex w-full items-center gap-3 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-3 text-left transition hover:bg-cyan-400/20 animate-pulse-slow"
       @click="showInstructions = true"
     >
       <span class="text-2xl">💡</span>

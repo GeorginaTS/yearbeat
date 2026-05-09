@@ -33,7 +33,7 @@ model Player {
 
 model Song {
   id            String     @id @default(cuid())
-  deezerTrackId Int        @unique
+  deezerTrackId BigInt     @unique
   title         String
   artist        String
   year          Int

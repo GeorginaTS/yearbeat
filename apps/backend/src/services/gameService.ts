@@ -19,7 +19,7 @@ async function withReconnect<T>(fn: () => Promise<T>): Promise<T> {
     return await fn()
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : String(e)
-    if (msg.includes("Can't reach database") || msg.includes('connection') || msg.includes('ECONNRESET')) {
+    if (msg.includes("Can't reach database") || msg.includes('connection') || msg.includes('ECONNRESET') || msg.includes('cached plan must not change result type') || msg.includes('0A000')) {
       await prisma.$disconnect()
       await prisma.$connect()
       return await fn()
@@ -110,7 +110,7 @@ export const gameService = {
 
     for (const [index, song] of songs.entries()) {
       const dbSong = await prisma.song.upsert({
-        where: { deezerTrackId: song.deezerTrackId! },
+        where: { deezerTrackId: BigInt(song.deezerTrackId!) },
         update: {
           title: song.title,
           artist: song.artist,
@@ -119,7 +119,7 @@ export const gameService = {
           coverUrl: song.coverUrl,
         },
         create: {
-          deezerTrackId: song.deezerTrackId!,
+          deezerTrackId: BigInt(song.deezerTrackId!),
           title: song.title,
           artist: song.artist,
           year: song.year,
@@ -222,14 +222,31 @@ export const gameService = {
     const gameSong = game.gameSongs.find((entry: GameSongEntry) => entry.order === currentOrder)
     if (!gameSong) throw new Error('Cançó no trobada')
 
+    // Comprova si el token de l'URL de Deezer CDN ha expirat
+    let previewUrl = gameSong.song.previewUrl
+    const expMatch = previewUrl.match(/[?&]hdnea=exp=(\d+)/)
+    if (expMatch) {
+      const expTs = parseInt(expMatch[1], 10)
+      if (Date.now() / 1000 > expTs - 60) {
+        // Token expirat o a punt d'expirar: re-fetch URL fresca de Deezer
+        try {
+          const fresh = await deezerService.fetchFreshPreviewUrl(Number(gameSong.song.deezerTrackId))
+          if (fresh) {
+            previewUrl = fresh
+            await prisma.song.update({ where: { id: gameSong.song.id }, data: { previewUrl: fresh } })
+          }
+        } catch { /* si falla, usa l'URL original */ }
+      }
+    }
+
     return {
       gameSongId: gameSong.id,
       id: gameSong.song.id,
-      deezerTrackId: gameSong.song.deezerTrackId,
+      deezerTrackId: Number(gameSong.song.deezerTrackId),
       title: gameSong.song.title,
       artist: gameSong.song.artist,
       year: gameSong.song.year,
-      previewUrl: gameSong.song.previewUrl,
+      previewUrl,
       coverUrl: gameSong.song.coverUrl,
     }
   },

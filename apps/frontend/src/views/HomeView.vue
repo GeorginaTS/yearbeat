@@ -1,7 +1,7 @@
 <template>
   <section class="relative min-h-screen overflow-hidden px-6 pb-16 pt-8">
-    <span class="neon-note left-[10%] top-[8%] text-5xl">♪</span>
-    <span
+    <!-- <span class="neon-note left-[10%] top-[8%] text-5xl">♪</span> -->
+    <!-- <span
       class="neon-note right-[14%] top-[10%] text-6xl"
       style="animation-delay: 0.8s"
       >♫</span
@@ -25,7 +25,7 @@
       class="neon-note right-[16%] top-[52%] text-4xl"
       style="animation-delay: 2s"
       >♪</span
-    >
+    > -->
 
     <!-- Info usuari (cantonada superior dreta, només si autenticat) -->
     <div v-if="authStore.isAuthenticated" class="absolute right-4 top-4">

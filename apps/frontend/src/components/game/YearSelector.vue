@@ -11,7 +11,7 @@
         max="2024"
         :disabled="disabled"
         :value="year"
-        class="w-full accent-violet-500"
+        class="w-full accent-cyan-400"
         @input="updateYear"
       />
       <div class="mt-2 flex justify-between text-xs font-semibold uppercase tracking-[0.12em] text-game-muted">

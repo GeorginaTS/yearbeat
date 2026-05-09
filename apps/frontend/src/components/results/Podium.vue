@@ -39,7 +39,7 @@ const arranged = computed(() => {
     height: entry.position === 1 ? 228 : entry.position === 2 ? 170 : 150,
     cardClass:
       entry.position === 1
-        ? 'bg-gradient-to-b from-fuchsia-500 to-violet-700 text-white'
+        ? 'bg-gradient-to-b from-pink-400 to-cyan-500 text-white'
         : entry.position === 2
           ? 'bg-[#41395f] text-white'
           : 'bg-[#5c3a2f] text-white',

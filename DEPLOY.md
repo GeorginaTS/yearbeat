@@ -135,22 +135,6 @@ El frontend estarà disponible a:
 
 ---
 
-## 🔄 Re-desplegament
-
-### Només backend:
-```bash
-./deploy-backend.sh
-```
-
-### Només frontend:
-```bash
-cd apps/frontend
-pnpm build
-firebase deploy --only hosting
-```
-
----
-
 ## ⚙️ Cloud Run — Configuració
 
 | Paràmetre       | Valor  | Motiu                                |

@@ -4,7 +4,7 @@
       v-for="player in players"
       :key="player.id"
       class="relative flex h-14 w-14 items-center justify-center rounded-full border border-white/10 shadow-card"
-      :style="{ backgroundColor: player.avatarColor || '#7c3aed' }"
+      :style="{ backgroundColor: player.avatarColor || '#22d3ee' }"
     >
       <span class="text-sm font-black text-white">{{ player.name.slice(0, 1).toUpperCase() }}</span>
       <span

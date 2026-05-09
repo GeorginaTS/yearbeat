@@ -11,7 +11,7 @@
       <div class="flex items-center gap-3">
         <div
           class="flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold text-white shadow-glow"
-          :style="{ backgroundColor: player.avatarColor || '#7c3aed' }"
+          :style="{ backgroundColor: player.avatarColor || '#22d3ee' }"
         >
           {{ player.name.slice(0, 1).toUpperCase() }}
         </div>

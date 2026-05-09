@@ -17,6 +17,10 @@ interface DeezerSearchResponse {
 
 const API_URL = 'https://api.deezer.com/search'
 const PREVIEW_TTL = 60 * 30 // 30 minuts — els tokens de Deezer CDN expiren en ~1h
+const DEEZER_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+  'Accept': 'application/json',
+}
 
 // Llista curada de cançons conegudes per dècada
 // Busquem cada cançó per nom+artista a Deezer → 30s preview garantit
@@ -106,10 +110,16 @@ async function fetchCuratedSong(entry: { title: string; artist: string; year: nu
   try {
     const { data } = await axios.get<DeezerSearchResponse>(API_URL, {
       params: { q: `track:"${entry.title}" artist:"${entry.artist}"`, limit: 5 },
+      headers: DEEZER_HEADERS,
       timeout: 8000,
     })
 
-    const track = (data?.data || []).find((t) => t.preview)
+    if (!data?.data) {
+      console.warn(`[deezer] resposta sense data per: ${entry.title} - ${entry.artist}`)
+      return null
+    }
+
+    const track = data.data.find((t) => t.preview)
     if (!track) return null
 
     const song: Song = {
@@ -124,14 +134,14 @@ async function fetchCuratedSong(entry: { title: string; artist: string; year: nu
 
     await cacheService.set(cacheKey, song, PREVIEW_TTL)
     return song
-  } catch {
+  } catch (err) {
+    console.warn(`[deezer] error fetchant "${entry.title}":`, err instanceof Error ? err.message : err)
     return null
   }
 }
 
 export const deezerService = {
-  async generateGameSongs(total = 10): Promise<Song[]> {
-    const cacheKey = `curated-pool-v2:${total}`
+  async generateGameSongs(total = 10): Promise<Song[]> {    const cacheKey = `curated-pool-v2:${total}`
     const cached = await cacheService.get<Song[]>(cacheKey)
     if (cached) {
       // retorna un subconjunt aleatori diferent cada cop
@@ -141,9 +151,15 @@ export const deezerService = {
     // Barreja la llista i intenta obtenir el màxim de cançons possibles
     const shuffled = [...CURATED_SONGS].sort(() => Math.random() - 0.5)
 
-    console.log(`[deezer] fetchant ${shuffled.length} cançons curades...`)
-    const results = await Promise.all(shuffled.map(fetchCuratedSong))
-    const valid = results.filter(Boolean) as Song[]
+    console.log(`[deezer] fetchant ${shuffled.length} cançons curades en lots...`)
+    const valid: Song[] = []
+    const BATCH = 5
+    for (let i = 0; i < shuffled.length; i += BATCH) {
+      const batch = shuffled.slice(i, i + BATCH)
+      const results = await Promise.all(batch.map(fetchCuratedSong))
+      valid.push(...(results.filter(Boolean) as Song[]))
+      if (i + BATCH < shuffled.length) await new Promise((r) => setTimeout(r, 300))
+    }
 
     console.log(`[deezer] ${valid.length}/${shuffled.length} cançons obtingudes amb preview`)
 
@@ -153,5 +169,18 @@ export const deezerService = {
     await cacheService.set(cacheKey, valid, PREVIEW_TTL)
 
     return [...valid].sort(() => Math.random() - 0.5).slice(0, total)
+  },
+
+  async fetchFreshPreviewUrl(deezerTrackId: number): Promise<string | null> {
+    try {
+      const { data } = await axios.get<DeezerSearchResponse>(`https://api.deezer.com/track/${deezerTrackId}`, {
+        timeout: 6000,
+      })
+      const track = data as unknown as DeezerTrack
+      if (track?.preview) {
+        return track.preview.replace(/^http:\/\//, 'https://')
+      }
+    } catch { /* silenci */ }
+    return null
   },
 }

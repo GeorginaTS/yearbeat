@@ -1,6 +1,8 @@
 # YearBeat
 
-Joc multijugador de trivia musical on els jugadors han d'endevinar l'any de llançament d'una cançó a partir d'un preview de 20 segons.
+![Logo](apps/frontend/public/img/logo.png)
+
+Multiplayer musical trivia game where players must guess the release year of a song from a 20-second preview.
 
 **Demo:** https://yearbeat-2fad8.web.app/
 
@@ -8,51 +10,51 @@ Joc multijugador de trivia musical on els jugadors han d'endevinar l'any de llan
 
 - Frontend: Vue 3 + Vite + TypeScript + Tailwind + Pinia + Socket.io client + PWA
 - Backend: Node.js + Express + TypeScript + Socket.io + Prisma + PostgreSQL + Redis
-- API externa: Deezer (previews de 30s, metadades de cançons i portades)
+- External API: Deezer (30s previews, song metadata and covers)
 - Monorepo: Turborepo + pnpm workspaces
 - Shared contracts: `packages/shared-types`
 
-## Estructura
+## Structure
 
-- `apps/frontend` — Aplicació client (UI i gameplay)
-- `apps/backend` — API REST + WebSocket + lògica de joc
-- `packages/shared-types` — Tipus compartits entre front i back
+- `apps/frontend` — Client application (UI and gameplay)
+- `apps/backend` — REST API + WebSocket + game logic
+- `packages/shared-types` — Shared types between frontend and backend
 
-## Requisits previs
+## Prerequisites
 
-- Node.js 20+ (recomanat 22+)
-- Corepack habilitat
-- PostgreSQL en execució
-- Redis en execució
+- Node.js 20+ (22+ recommended)
+- Corepack enabled
+- PostgreSQL running
+- Redis running
 
-## Configuració ràpida
+## Quick Setup
 
-1. Instal·lar dependències:
+1. Install dependencies:
 
    - `corepack pnpm install`
 
-2. Configurar variables d'entorn:
+2. Configure environment variables:
 
    - Backend: `apps/backend/.env`
    - Frontend: `apps/frontend/.env`
 
-3. Generar Prisma client i aplicar schema:
+3. Generate Prisma client and apply schema:
 
    - `corepack pnpm --filter @yearbeat/backend prisma generate`
    - `corepack pnpm --filter @yearbeat/backend prisma db push`
 
-## Execució en desenvolupament
+## Development
 
-Opció A (separat):
+Option A (separate):
 
 - Terminal 1: `corepack pnpm --filter @yearbeat/backend dev`
 - Terminal 2: `corepack pnpm --filter @yearbeat/frontend dev`
 
-Opció B (monorepo):
+Option B (monorepo):
 
 - `corepack pnpm dev`
 
-> Si `turbo` falla al teu entorn, usa l'opció A.
+> If `turbo` fails in your environment, use Option A.
 
 ## Build
 
@@ -60,33 +62,33 @@ Opció B (monorepo):
 - `corepack pnpm --filter @yearbeat/backend build`
 - `corepack pnpm --filter @yearbeat/frontend build`
 
-## Flux funcional (manual)
+## Functional Flow (manual)
 
-1. Obrir `http://localhost:5173`
-2. Crear una sala
-3. Obrir segona pestanya/dispositiu i unir-se amb codi
-4. Iniciar partida (host)
-5. Fer votacions, reveal i pantalla final
+1. Open `http://localhost:5173`
+2. Create a room
+3. Open a second tab/device and join with the room code
+4. Start the game (host)
+5. Vote, reveal, and view the final screen
 
-## Checklist QA (curt)
+## QA Checklist (short)
 
-- [ ] Es pot crear i unir a partida
-- [ ] El compte enrere baixa i fa reveal al final
-- [ ] Puntuació correcta segons proximitat d'any
-- [ ] Llista final i podi coherents
-- [ ] Àudio preview reprodueix en mòbil i desktop
-- [ ] PWA es genera en build
+- [ ] Can create and join a game
+- [ ] Countdown decreases and reveals at the end
+- [ ] Score is correct based on year proximity
+- [ ] Final leaderboard and podium are consistent
+- [ ] Audio preview plays on mobile and desktop
+- [ ] PWA is generated on build
 
 ## Troubleshooting
 
 - `pnpm not recognized`:
-  - usa `corepack pnpm ...`
-- Error Prisma client:
-  - executa `corepack pnpm --filter @yearbeat/backend prisma generate`
-- Error connexió BD/Redis:
-  - revisa `apps/backend/.env` i serveis locals
+  - use `corepack pnpm ...`
+- Prisma client error:
+  - run `corepack pnpm --filter @yearbeat/backend prisma generate`
+- DB/Redis connection error:
+  - check `apps/backend/.env` and local services
 
-## Documentació específica
+## Specific Documentation
 
 - Frontend: `apps/frontend/README.md`
 - Backend: `apps/backend/README.md`
